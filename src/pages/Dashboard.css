@@ -1,0 +1,74 @@
+.dashboard__error {
+  color: var(--color-danger);
+}
+
+.dashboard__counters {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.dashboard__card {
+  background: var(--color-bg-soft);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+}
+
+.dashboard__card-label {
+  font-size: 12px;
+  color: var(--color-text-soft);
+  margin-bottom: 6px;
+}
+
+.dashboard__card-value {
+  font-size: 28px;
+  font-weight: 500;
+}
+
+.dashboard__card-value--warning {
+  color: var(--color-gold);
+}
+
+.dashboard__panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.dashboard__panel {
+  background: var(--color-bg-soft);
+  border-radius: var(--radius-md);
+  padding: 20px;
+}
+
+.dashboard__panel h2 {
+  font-size: 16px;
+  margin-bottom: 14px;
+}
+
+.dashboard__empty {
+  font-size: 13px;
+  color: var(--color-text-soft);
+}
+
+.dashboard__risk-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dashboard__risk-list li {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  padding: 8px 10px;
+  background: var(--color-bg);
+  border-radius: var(--radius-sm);
+}
+
+.dashboard__risk-list a {
+  color: var(--color-lavender-dark);
+  font-weight: 500;
+}

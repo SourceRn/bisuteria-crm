@@ -1,0 +1,116 @@
+.detalle__back {
+  font-size: 13px;
+  color: var(--color-lavender-dark);
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.detalle__error {
+  color: var(--color-danger);
+}
+
+.detalle__layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.detalle__info,
+.detalle__interacciones {
+  background: var(--color-bg-soft);
+  border-radius: var(--radius-md);
+  padding: 20px;
+}
+
+.detalle__info h2,
+.detalle__interacciones h2 {
+  font-size: 16px;
+  margin-bottom: 14px;
+}
+
+.detalle__info p {
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.detalle__etapa-label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--color-text-soft);
+  margin-top: 16px;
+}
+
+.detalle__etapa-label select {
+  background: var(--color-bg);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+}
+
+.detalle__form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.detalle__form select {
+  background: var(--color-bg);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+}
+
+.detalle__form input {
+  flex: 1;
+  background: var(--color-bg);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+}
+
+.detalle__form button {
+  background: var(--color-lavender);
+  color: var(--color-lavender-dark);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 8px 16px;
+  font-weight: 500;
+}
+
+.detalle__empty {
+  font-size: 13px;
+  color: var(--color-text-soft);
+}
+
+.detalle__timeline {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.detalle__timeline li {
+  background: var(--color-bg);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+}
+
+.detalle__timeline-tipo {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--color-lavender-dark);
+  text-transform: uppercase;
+}
+
+.detalle__timeline p {
+  font-size: 13px;
+  margin: 4px 0;
+}
+
+.detalle__timeline time {
+  font-size: 11px;
+  color: var(--color-text-soft);
+}

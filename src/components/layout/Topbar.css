@@ -1,0 +1,16 @@
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 32px;
+  border-bottom: 0.5px solid var(--color-bg-soft);
+}
+
+.topbar__title {
+  font-size: 24px;
+}
+
+.topbar__user {
+  font-size: 13px;
+  color: var(--color-text-soft);
+}
