@@ -109,3 +109,79 @@
 .etapa-badge--activo { background: var(--color-sage); color: var(--color-sage-dark); }
 .etapa-badge--frecuente { background: var(--color-lavender); color: var(--color-lavender-dark); }
 .etapa-badge--inactivo { background: #E8C4C4; color: #8A4F52; }
+
+.clientes__edit-btn {
+  background: none;
+  border: none;
+  color: var(--color-lavender-dark);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.clientes__modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(69, 61, 51, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.clientes__modal {
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+  padding: 28px;
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.clientes__modal h2 {
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+.clientes__modal label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--color-text-soft);
+}
+
+.clientes__modal input,
+.clientes__modal select {
+  background: var(--color-bg-soft);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  color: var(--color-text);
+}
+
+.clientes__modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.clientes__modal-actions button[type="button"] {
+  background: none;
+  border: none;
+  color: var(--color-text-soft);
+  font-size: 13px;
+  padding: 10px 16px;
+}
+
+.clientes__modal-actions button[type="submit"] {
+  background: var(--color-lavender);
+  color: var(--color-lavender-dark);
+  border: none;
+  border-radius: var(--radius-full);
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 500;
+}

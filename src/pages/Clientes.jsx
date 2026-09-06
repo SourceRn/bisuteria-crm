@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Layout from "../components/layout/Layout";
-import { getClientes, crearCliente } from "../services/api";
+import { getClientes, crearCliente, actualizarCliente } from "../services/api";
 import "./Clientes.css";
 
 const ETAPAS = ["Prospecto", "Activo", "Frecuente", "Inactivo"];
+const ESTADOS = ["activo", "inactivo"];
 
 export default function Clientes() {
   const [clientes, setClientes] = useState([]);
@@ -12,16 +13,19 @@ export default function Clientes() {
   const [etapa, setEtapa] = useState("");
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
-
+  const [estado, setEstado] = useState("");
   const [mostrarForm, setMostrarForm] = useState(false);
   const [nuevo, setNuevo] = useState({ nombre: "", correo: "", telefono: "" });
   const [guardando, setGuardando] = useState(false);
+  const [editando, setEditando] = useState(null); // guarda el cliente completo que se está editando
+  const [guardandoEdicion, setGuardandoEdicion] = useState(false);
 
   function cargar() {
     setCargando(true);
     const params = {};
     if (buscar) params.buscar = buscar;
     if (etapa) params.etapa = etapa;
+    if (estado) params.estado = estado;
 
     getClientes(params)
       .then(setClientes)
@@ -33,7 +37,7 @@ export default function Clientes() {
     const timeout = setTimeout(cargar, 300); // debounce simple para la busqueda
     return () => clearTimeout(timeout);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [buscar, etapa]);
+  }, [buscar, etapa, estado]);
 
   async function handleCrear(e) {
     e.preventDefault();
@@ -47,6 +51,25 @@ export default function Clientes() {
       setError(err.message);
     } finally {
       setGuardando(false);
+    }
+  }
+
+  async function handleGuardarEdicion(e) {
+    e.preventDefault();
+    setGuardandoEdicion(true);
+    try {
+      await actualizarCliente(editando.id, {
+        nombre: editando.nombre,
+        correo: editando.correo,
+        telefono: editando.telefono,
+        estado: editando.estado,
+      });
+      setEditando(null);
+      cargar();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setGuardandoEdicion(false);
     }
   }
 
@@ -64,6 +87,12 @@ export default function Clientes() {
           <option value="">Todas las etapas</option>
           {ETAPAS.map((et) => (
             <option key={et} value={et}>{et}</option>
+          ))}
+        </select>
+        <select value={estado} onChange={(e) => setEstado(e.target.value)} className="clientes__filter">
+          <option value="">Todos los estados</option>
+          {ESTADOS.map((es) => (
+            <option key={es} value={es}>{es}</option>
           ))}
         </select>
         <button className="clientes__new-btn" onClick={() => setMostrarForm((v) => !v)}>
@@ -112,6 +141,7 @@ export default function Clientes() {
               <th>Teléfono</th>
               <th>Etapa</th>
               <th>Estado</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -122,15 +152,82 @@ export default function Clientes() {
                 <td>{c.telefono || "—"}</td>
                 <td><span className={`etapa-badge etapa-badge--${c.etapa_crm.toLowerCase()}`}>{c.etapa_crm}</span></td>
                 <td>{c.estado}</td>
+                <td>
+                  <button className="clientes__edit-btn" onClick={() => setEditando(c)}>
+                    Editar
+                  </button>
+                </td>
               </tr>
             ))}
             {clientes.length === 0 && (
               <tr>
-                <td colSpan={5} className="clientes__empty">No hay clientes con esos filtros.</td>
+                <td colSpan={6} className="clientes__empty">No hay clientes con esos filtros.</td>
               </tr>
             )}
           </tbody>
         </table>
+      )}
+
+      {editando && (
+        <div className="clientes__modal-overlay" onClick={() => setEditando(null)}>
+          <form
+            className="clientes__modal"
+            onClick={(e) => e.stopPropagation()}
+            onSubmit={handleGuardarEdicion}
+          >
+            <h2>Editar cliente</h2>
+
+            <label>
+              Nombre
+              <input
+                type="text"
+                required
+                value={editando.nombre}
+                onChange={(e) => setEditando((p) => ({ ...p, nombre: e.target.value }))}
+              />
+            </label>
+
+            <label>
+              Correo
+              <input
+                type="email"
+                required
+                value={editando.correo}
+                onChange={(e) => setEditando((p) => ({ ...p, correo: e.target.value }))}
+              />
+            </label>
+
+            <label>
+              Teléfono
+              <input
+                type="tel"
+                value={editando.telefono || ""}
+                onChange={(e) => setEditando((p) => ({ ...p, telefono: e.target.value }))}
+              />
+            </label>
+
+            <label>
+              Estado
+              <select
+                value={editando.estado}
+                onChange={(e) => setEditando((p) => ({ ...p, estado: e.target.value }))}
+              >
+                {ESTADOS.map((es) => (
+                  <option key={es} value={es}>{es}</option>
+                ))}
+              </select>
+            </label>
+
+            <div className="clientes__modal-actions">
+              <button type="button" onClick={() => setEditando(null)}>
+                Cancelar
+              </button>
+              <button type="submit" disabled={guardandoEdicion}>
+                {guardandoEdicion ? "Guardando..." : "Guardar cambios"}
+              </button>
+            </div>
+          </form>
+        </div>
       )}
     </Layout>
   );

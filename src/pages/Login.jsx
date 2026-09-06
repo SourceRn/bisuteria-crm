@@ -1,20 +1,31 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import "./Login.css";
 
 export default function Login() {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [form, setForm] = useState({ correo: "", password: "" });
+  const [error, setError] = useState(null);
+  const [cargando, setCargando] = useState(false);
 
   function handleChange(e) {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    // TODO (sabado): reemplazar por supabase.auth.signInWithPassword({ email, password })
-    // y guardar el token/usuario en un AuthContext antes de navegar.
-    navigate("/");
+    setError(null);
+    setCargando(true);
+    try {
+      await login(form.correo, form.password);
+      navigate("/");
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setCargando(false);
+    }
   }
 
   return (
@@ -45,8 +56,10 @@ export default function Login() {
           />
         </label>
 
-        <button type="submit" className="login__submit">
-          Iniciar sesión
+        {error && <p className="login__error">{error}</p>}
+
+        <button type="submit" className="login__submit" disabled={cargando}>
+          {cargando ? "Ingresando..." : "Iniciar sesión"}
         </button>
       </form>
     </div>
