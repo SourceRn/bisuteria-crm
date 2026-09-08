@@ -185,3 +185,12 @@
   font-size: 13px;
   font-weight: 500;
 }
+
+.clientes__delete-btn {
+  background: none;
+  border: none;
+  color: var(--color-danger);
+  font-size: 13px;
+  font-weight: 500;
+  margin-left: 12px;
+}

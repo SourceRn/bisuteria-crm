@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Layout from "../components/layout/Layout";
+import { useAuth } from "../context/AuthContext";
 import {
   getCliente,
   getInteraccionesDeCliente,
@@ -18,7 +19,7 @@ export default function ClienteDetalle() {
   const [interacciones, setInteracciones] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
-
+  const { perfil } = useAuth();
   const [nuevaInteraccion, setNuevaInteraccion] = useState({ tipo: "Llamada", descripcion: "" });
   const [guardando, setGuardando] = useState(false);
 
@@ -52,7 +53,11 @@ export default function ClienteDetalle() {
     e.preventDefault();
     setGuardando(true);
     try {
-      await crearInteraccion({ cliente_id: id, ...nuevaInteraccion });
+      await crearInteraccion({
+        cliente_id: id,
+        usuario_id: perfil?.id,
+        ...nuevaInteraccion,
+      });
       setNuevaInteraccion({ tipo: "Llamada", descripcion: "" });
       cargar();
     } catch (err) {

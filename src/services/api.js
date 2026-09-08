@@ -48,3 +48,10 @@ export const crearInteraccion = (datos) =>
 // Metricas
 export const getMetricas = (dias) =>
   request(`/metricas${dias ? `?dias=${dias}` : ""}`);
+
+// Usuarios
+export const getUsuarioActual = () => request("/usuarios/me");
+export const getMiActividad = (params = {}) => {
+  const query = new URLSearchParams(params).toString();
+  return request(`/usuarios/me/actividad${query ? `?${query}` : ""}`);
+};

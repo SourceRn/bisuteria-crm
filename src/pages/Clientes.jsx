@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Layout from "../components/layout/Layout";
-import { getClientes, crearCliente, actualizarCliente } from "../services/api";
+import { useAuth } from "../context/AuthContext";
+import { getClientes, crearCliente, actualizarCliente, eliminarCliente } from "../services/api";
 import "./Clientes.css";
 
 const ETAPAS = ["Prospecto", "Activo", "Frecuente", "Inactivo"];
@@ -19,6 +20,7 @@ export default function Clientes() {
   const [guardando, setGuardando] = useState(false);
   const [editando, setEditando] = useState(null); // guarda el cliente completo que se está editando
   const [guardandoEdicion, setGuardandoEdicion] = useState(false);
+  const { esAdmin } = useAuth();
 
   function cargar() {
     setCargando(true);
@@ -70,6 +72,18 @@ export default function Clientes() {
       setError(err.message);
     } finally {
       setGuardandoEdicion(false);
+    }
+  }
+
+  async function handleEliminar(cliente) {
+    const confirmado = window.confirm(`¿Eliminar a ${cliente.nombre}? Esta acción no se puede deshacer.`);
+    if (!confirmado) return;
+
+    try {
+      await eliminarCliente(cliente.id);
+      cargar();
+    } catch (err) {
+      setError(err.message);
     }
   }
 
@@ -153,9 +167,14 @@ export default function Clientes() {
                 <td><span className={`etapa-badge etapa-badge--${c.etapa_crm.toLowerCase()}`}>{c.etapa_crm}</span></td>
                 <td>{c.estado}</td>
                 <td>
-                  <button className="clientes__edit-btn" onClick={() => setEditando(c)}>
+                  <button className="clientes__edit-btn" onClick={() => setEditando({ ...c, telefono: c.telefono || "" })}>
                     Editar
                   </button>
+                  {esAdmin && (
+                    <button className="clientes__delete-btn" onClick={() => handleEliminar(c)}>
+                      Eliminar
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}

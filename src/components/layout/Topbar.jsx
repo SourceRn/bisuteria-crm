@@ -5,7 +5,7 @@ import { useAuth } from "../../context/AuthContext";
 import "./Topbar.css";
 
 export default function Topbar({ titulo }) {
-  const { usuario, logout } = useAuth();
+  const { usuario, perfil, logout } = useAuth();
   const navigate = useNavigate();
   const [abierto, setAbierto] = useState(false);
   const menuRef = useRef(null);
@@ -43,7 +43,9 @@ export default function Topbar({ titulo }) {
           <div className="topbar__menu">
             <div className="topbar__menu-header">
               <p className="topbar__menu-email">{usuario?.email}</p>
-              <p className="topbar__menu-role">Administrador</p>
+              <p className="topbar__menu-role">
+                {perfil?.rol === "admin" ? "Administrador" : "Usuario"}
+              </p>            
             </div>
             <button className="topbar__menu-item" onClick={handleLogout}>
               <IconLogout size={15} stroke={1.8} />
