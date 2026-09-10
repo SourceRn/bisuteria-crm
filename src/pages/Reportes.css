@@ -1,0 +1,68 @@
+.reportes__toolbar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.reportes__tab {
+  background: var(--color-bg-soft);
+  border: none;
+  border-radius: var(--radius-full);
+  padding: 8px 20px;
+  font-size: 13px;
+  color: var(--color-text-soft);
+}
+
+.reportes__tab.is-active {
+  background: var(--color-lavender);
+  color: var(--color-lavender-dark);
+  font-weight: 500;
+}
+
+.reportes__error {
+  color: var(--color-danger);
+}
+
+.reportes__empty {
+  color: var(--color-text-soft);
+  font-size: 14px;
+}
+
+.reportes__panel {
+  background: var(--color-bg-soft);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.reportes__panel h2 {
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+.reportes__table {
+  background: var(--color-bg-soft);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  width: 100%;
+}
+
+.reportes__table th {
+  text-align: left;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-soft);
+  padding: 12px 14px;
+  border-bottom: 0.5px solid var(--color-bg);
+}
+
+.reportes__table td {
+  padding: 10px 14px;
+  font-size: 13px;
+  border-bottom: 0.5px solid var(--color-bg);
+}
+
+.reportes__table tr:last-child td {
+  border-bottom: none;
+}

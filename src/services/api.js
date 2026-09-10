@@ -55,3 +55,10 @@ export const getMiActividad = (params = {}) => {
   const query = new URLSearchParams(params).toString();
   return request(`/usuarios/me/actividad${query ? `?${query}` : ""}`);
 };
+export const getUsuarios = () => request("/usuarios");
+
+// Evaluaciones (snapshots historicos)
+export const getEvaluaciones = (params = {}) => {
+  const query = new URLSearchParams(params).toString();
+  return request(`/evaluaciones${query ? `?${query}` : ""}`);
+};

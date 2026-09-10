@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import Clientes from "./pages/Clientes";
 import ClienteDetalle from "./pages/ClienteDetalle";
 import MiActividad from "./pages/MiActividad";
+import Reportes from "./pages/Reportes";
 
 export default function App() {
   return (
@@ -43,6 +44,14 @@ export default function App() {
             element={
               <ProtectedRoute>
                 <MiActividad />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/reportes"
+            element={
+              <ProtectedRoute>
+                <Reportes />
               </ProtectedRoute>
             }
           />

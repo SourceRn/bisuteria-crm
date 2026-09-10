@@ -7,6 +7,7 @@ import {
   getInteraccionesDeCliente,
   actualizarEtapaCliente,
   crearInteraccion,
+  getUsuarios,
 } from "../services/api";
 import "./ClienteDetalle.css";
 
@@ -20,8 +21,14 @@ export default function ClienteDetalle() {
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
   const { perfil } = useAuth();
-  const [nuevaInteraccion, setNuevaInteraccion] = useState({ tipo: "Llamada", descripcion: "" });
+  const [nuevaInteraccion, setNuevaInteraccion] = useState({ 
+    tipo: "Llamada", 
+    descripcion: "",
+    fecha: "",
+    usuario_id: "",
+  });
   const [guardando, setGuardando] = useState(false);
+  const [usuarios, setUsuarios] = useState([]);
 
   function cargar() {
     setCargando(true);
@@ -36,6 +43,15 @@ export default function ClienteDetalle() {
 
   useEffect(() => {
     cargar();
+    getUsuarios()
+      .then((lista) => {
+        setUsuarios(lista);
+        // Preselecciona al usuario logueado como responsable por default
+        if (perfil?.id) {
+          setNuevaInteraccion((prev) => ({ ...prev, usuario_id: perfil.id }));
+        }
+      })
+      .catch((err) => console.error("No se pudo cargar la lista de usuarios:", err.message));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
@@ -55,10 +71,12 @@ export default function ClienteDetalle() {
     try {
       await crearInteraccion({
         cliente_id: id,
-        usuario_id: perfil?.id,
-        ...nuevaInteraccion,
+        usuario_id: nuevaInteraccion.usuario_id || perfil?.id,
+        tipo: nuevaInteraccion.tipo,
+        descripcion: nuevaInteraccion.descripcion,
+        fecha: nuevaInteraccion.fecha ? new Date(nuevaInteraccion.fecha).toISOString() : undefined,
       });
-      setNuevaInteraccion({ tipo: "Llamada", descripcion: "" });
+      setNuevaInteraccion({ tipo: "Llamada", descripcion: "", fecha: "", usuario_id: perfil?.id || "" });
       cargar();
     } catch (err) {
       setError(err.message);
@@ -95,20 +113,40 @@ export default function ClienteDetalle() {
           <h2>Historial de interacciones</h2>
 
           <form className="detalle__form" onSubmit={handleRegistrarInteraccion}>
-            <select
-              value={nuevaInteraccion.tipo}
-              onChange={(e) => setNuevaInteraccion((p) => ({ ...p, tipo: e.target.value }))}
-            >
-              {TIPOS.map((t) => (
-                <option key={t} value={t}>{t}</option>
-              ))}
-            </select>
+            <div className="detalle__form-row">
+              <select
+                value={nuevaInteraccion.tipo}
+                onChange={(e) => setNuevaInteraccion((p) => ({ ...p, tipo: e.target.value }))}
+              >
+                {TIPOS.map((t) => (
+                  <option key={t} value={t}>{t}</option>
+                ))}
+              </select>
+
+              <input
+                type="datetime-local"
+                value={nuevaInteraccion.fecha}
+                onChange={(e) => setNuevaInteraccion((p) => ({ ...p, fecha: e.target.value }))}
+              />
+
+              <select
+                value={nuevaInteraccion.usuario_id}
+                onChange={(e) => setNuevaInteraccion((p) => ({ ...p, usuario_id: e.target.value }))}
+              >
+                <option value="">Responsable...</option>
+                {usuarios.map((u) => (
+                  <option key={u.id} value={u.id}>{u.nombre}</option>
+                ))}
+              </select>
+            </div>
+
             <input
               type="text"
               placeholder="Descripción..."
               value={nuevaInteraccion.descripcion}
               onChange={(e) => setNuevaInteraccion((p) => ({ ...p, descripcion: e.target.value }))}
             />
+
             <button type="submit" disabled={guardando}>
               {guardando ? "..." : "Registrar"}
             </button>

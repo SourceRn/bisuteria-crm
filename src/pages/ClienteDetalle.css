@@ -52,19 +52,27 @@
 
 .detalle__form {
   display: flex;
-  gap: 8px;
+  flex-direction: column;
+  gap: 10px;
   margin-bottom: 18px;
 }
 
-.detalle__form select {
+.detalle__form-row {
+  display: flex;
+  gap: 8px;
+}
+
+.detalle__form-row select,
+.detalle__form-row input {
+  flex: 1;
   background: var(--color-bg);
   border: none;
   border-radius: var(--radius-sm);
   padding: 8px 10px;
+  font-size: 13px;
 }
 
-.detalle__form input {
-  flex: 1;
+.detalle__form input[type="text"] {
   background: var(--color-bg);
   border: none;
   border-radius: var(--radius-sm);
@@ -72,6 +80,7 @@
 }
 
 .detalle__form button {
+  align-self: flex-start;
   background: var(--color-lavender);
   color: var(--color-lavender-dark);
   border: none;
