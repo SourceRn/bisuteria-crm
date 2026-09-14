@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Layout from "../components/layout/Layout";
 import { getMiActividad } from "../services/api";
 import "./MiActividad.css";
@@ -10,6 +10,7 @@ export default function MiActividad() {
   const [hasta, setHasta] = useState("");
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   function cargar() {
     setCargando(true);
@@ -59,9 +60,9 @@ export default function MiActividad() {
           </thead>
           <tbody>
             {actividad.map((a) => (
-              <tr key={a.id}>
+              <tr key={a.id} className="actividad__row" onClick={() => navigate(`/clientes/${a.cliente_id}`)}>
                 <td>{new Date(a.fecha).toLocaleString()}</td>
-                <td><Link to={`/clientes/${a.cliente_id}`}>{a.cliente_nombre}</Link></td>
+                <td><span className="actividad__row-name">{a.cliente_nombre}</span></td>
                 <td>{a.tipo}</td>
                 <td>{a.descripcion || "—"}</td>
               </tr>

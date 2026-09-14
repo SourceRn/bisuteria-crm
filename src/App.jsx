@@ -7,6 +7,7 @@ import Clientes from "./pages/Clientes";
 import ClienteDetalle from "./pages/ClienteDetalle";
 import MiActividad from "./pages/MiActividad";
 import Reportes from "./pages/Reportes";
+import Pedidos from "./pages/Pedidos";
 
 export default function App() {
   return (
@@ -52,6 +53,14 @@ export default function App() {
             element={
               <ProtectedRoute>
                 <Reportes />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/pedidos"
+            element={
+              <ProtectedRoute>
+                <Pedidos />
               </ProtectedRoute>
             }
           />

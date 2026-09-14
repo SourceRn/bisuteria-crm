@@ -72,3 +72,70 @@
   color: var(--color-lavender-dark);
   font-weight: 500;
 }
+
+.dashboard__risk-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  padding: 8px 10px;
+  background: var(--color-bg);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+
+.dashboard__risk-row:hover {
+  background: var(--color-bg-soft);
+}
+
+.dashboard__risk-name {
+  color: var(--color-lavender-dark);
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: var(--color-lavender);
+  text-underline-offset: 3px;
+}
+
+.dashboard__pie-layout {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dashboard__pie-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+.dashboard__pie-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dashboard__pie-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dashboard__pie-legend-label {
+  font-size: 12px;
+  color: var(--color-text-soft);
+}
+
+.dashboard__pie-legend-value {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.dashboard__pie-legend-value span {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--color-text-soft);
+}

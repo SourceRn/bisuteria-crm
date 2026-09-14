@@ -1,10 +1,35 @@
-.actividad__toolbar {
+.pedidos__counters {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.pedidos__card {
+  background: var(--color-bg-soft);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+}
+
+.pedidos__card-label {
+  font-size: 12px;
+  color: var(--color-text-soft);
+  margin-bottom: 6px;
+}
+
+.pedidos__card-value {
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--color-gold);
+}
+
+.pedidos__toolbar {
   display: flex;
   gap: 20px;
   margin-bottom: 20px;
 }
 
-.actividad__toolbar label {
+.pedidos__toolbar label {
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -12,63 +37,64 @@
   color: var(--color-text-soft);
 }
 
-.actividad__toolbar input {
+.pedidos__toolbar input {
   background: var(--color-bg-soft);
   border: none;
   border-radius: var(--radius-sm);
   padding: 8px 10px;
 }
 
-.actividad__error {
+.pedidos__error {
   color: var(--color-danger);
 }
 
-.actividad__empty {
+.pedidos__empty {
   color: var(--color-text-soft);
   font-size: 14px;
 }
 
-.actividad__table {
+.pedidos__table {
   background: var(--color-bg-soft);
   border-radius: var(--radius-md);
   overflow: hidden;
+  width: 100%;
 }
 
-.actividad__table th {
+.pedidos__table th {
   text-align: left;
-  font-size: 12px;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: var(--color-text-soft);
-  padding: 14px 16px;
+  padding: 12px 14px;
   border-bottom: 0.5px solid var(--color-bg);
 }
 
-.actividad__table td {
-  padding: 12px 16px;
-  font-size: 14px;
+.pedidos__table td {
+  padding: 10px 14px;
+  font-size: 13px;
   border-bottom: 0.5px solid var(--color-bg);
 }
 
-.actividad__table tr:last-child td {
+.pedidos__table tr:last-child td {
   border-bottom: none;
 }
 
-.actividad__table a {
+.pedidos__table a {
   color: var(--color-lavender-dark);
   font-weight: 500;
 }
 
-.actividad__row {
+.pedidos__row {
   cursor: pointer;
   transition: background 0.12s ease;
 }
 
-.actividad__row:hover {
+.pedidos__row:hover {
   background: var(--color-bg);
 }
 
-.actividad__row-name {
+.pedidos__row-name {
   color: var(--color-lavender-dark);
   font-weight: 500;
   text-decoration: underline;

@@ -194,3 +194,20 @@
   font-weight: 500;
   margin-left: 12px;
 }
+
+.clientes__row {
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+
+.clientes__row:hover {
+  background: var(--color-bg);
+}
+
+.clientes__row-name {
+  color: var(--color-lavender-dark);
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: var(--color-lavender);
+  text-underline-offset: 3px;
+}

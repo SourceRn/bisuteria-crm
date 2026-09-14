@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from "recharts";
+import {
+  LineChart, Line, BarChart, Bar,
+  XAxis, YAxis, Tooltip, Legend, CartesianGrid, ResponsiveContainer,
+} from "recharts";
 import Layout from "../components/layout/Layout";
 import { getEvaluaciones } from "../services/api";
 import "./Reportes.css";
@@ -22,7 +25,9 @@ export default function Reportes() {
     fecha: new Date(e.fecha).toLocaleDateString("es-MX", { day: "2-digit", month: "short" }),
     total_clientes: e.notas?.total_clientes ?? 0,
     clientes_activos: e.notas?.clientes_activos ?? 0,
+    clientes_inactivos: e.notas?.clientes_inactivos ?? 0,
     total_interacciones: e.notas?.total_interacciones ?? 0,
+    sin_contacto_reciente: e.notas?.clientes_sin_interaccion_reciente ?? 0,
   }));
 
   return (
@@ -55,12 +60,13 @@ export default function Reportes() {
         <>
           <div className="reportes__panel">
             <h2>Tendencia de clientes</h2>
-            <ResponsiveContainer width="100%" height={280}>
+            <ResponsiveContainer width="100%" height={260}>
               <LineChart data={datosGrafica}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#EFE9DE" />
                 <XAxis dataKey="fecha" fontSize={12} />
                 <YAxis fontSize={12} />
                 <Tooltip />
+                <Legend wrapperStyle={{ fontSize: 12 }} />
                 <Line type="monotone" dataKey="total_clientes" stroke="#8985BC" name="Total clientes" strokeWidth={2} />
                 <Line type="monotone" dataKey="clientes_activos" stroke="#4C5A46" name="Activos" strokeWidth={2} />
               </LineChart>
@@ -68,42 +74,34 @@ export default function Reportes() {
           </div>
 
           <div className="reportes__panel">
-            <h2>Interacciones por periodo</h2>
-            <ResponsiveContainer width="100%" height={220}>
-              <LineChart data={datosGrafica}>
+            <h2>Activos vs inactivos por periodo</h2>
+            <ResponsiveContainer width="100%" height={240}>
+              <BarChart data={datosGrafica}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#EFE9DE" />
                 <XAxis dataKey="fecha" fontSize={12} />
                 <YAxis fontSize={12} />
                 <Tooltip />
-                <Line type="monotone" dataKey="total_interacciones" stroke="#B8935A" name="Interacciones" strokeWidth={2} />
-              </LineChart>
+                <Legend wrapperStyle={{ fontSize: 12 }} />
+                <Bar dataKey="clientes_activos" stackId="a" fill="#9CAE93" name="Activos" />
+                <Bar dataKey="clientes_inactivos" stackId="a" fill="#E8C4C4" name="Inactivos" />
+              </BarChart>
             </ResponsiveContainer>
           </div>
 
-          <table className="reportes__table">
-            <thead>
-              <tr>
-                <th>Fecha</th>
-                <th>Total clientes</th>
-                <th>Activos</th>
-                <th>Inactivos</th>
-                <th>Interacciones</th>
-                <th>Sin contacto reciente</th>
-              </tr>
-            </thead>
-            <tbody>
-              {[...evaluaciones].reverse().map((e) => (
-                <tr key={e.id}>
-                  <td>{new Date(e.fecha).toLocaleDateString()}</td>
-                  <td>{e.notas?.total_clientes}</td>
-                  <td>{e.notas?.clientes_activos}</td>
-                  <td>{e.notas?.clientes_inactivos}</td>
-                  <td>{e.notas?.total_interacciones}</td>
-                  <td>{e.notas?.clientes_sin_interaccion_reciente}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <div className="reportes__panel">
+            <h2>Interacciones y clientes en riesgo</h2>
+            <ResponsiveContainer width="100%" height={240}>
+              <BarChart data={datosGrafica}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#EFE9DE" />
+                <XAxis dataKey="fecha" fontSize={12} />
+                <YAxis fontSize={12} />
+                <Tooltip />
+                <Legend wrapperStyle={{ fontSize: 12 }} />
+                <Bar dataKey="total_interacciones" fill="#B8935A" name="Interacciones" />
+                <Bar dataKey="sin_contacto_reciente" fill="#D4537E" name="Sin contacto reciente" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
         </>
       )}
     </Layout>

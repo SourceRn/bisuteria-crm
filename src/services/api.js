@@ -62,3 +62,10 @@ export const getEvaluaciones = (params = {}) => {
   const query = new URLSearchParams(params).toString();
   return request(`/evaluaciones${query ? `?${query}` : ""}`);
 };
+
+// Pedidos (vista de consulta sobre interacciones tipo "Pedido")
+export const getPedidos = (params = {}) => {
+  const query = new URLSearchParams(params).toString();
+  return request(`/pedidos${query ? `?${query}` : ""}`);
+};
+export const getResumenPedidos = () => request("/pedidos/resumen");

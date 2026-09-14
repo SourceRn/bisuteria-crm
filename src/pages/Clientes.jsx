@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import Layout from "../components/layout/Layout";
 import { useAuth } from "../context/AuthContext";
 import { getClientes, crearCliente, actualizarCliente, eliminarCliente } from "../services/api";
 import "./Clientes.css";
+import { Link, useNavigate } from "react-router-dom";
 
 const ETAPAS = ["Prospecto", "Activo", "Frecuente", "Inactivo"];
 const ESTADOS = ["activo", "inactivo"];
@@ -16,11 +16,14 @@ export default function Clientes() {
   const [error, setError] = useState(null);
   const [estado, setEstado] = useState("");
   const [mostrarForm, setMostrarForm] = useState(false);
-  const [nuevo, setNuevo] = useState({ nombre: "", correo: "", telefono: "" });
+  const [nuevo, setNuevo] = useState({ nombre: "", correo: "", telefono: "", empresa: "" });
   const [guardando, setGuardando] = useState(false);
   const [editando, setEditando] = useState(null); // guarda el cliente completo que se está editando
   const [guardandoEdicion, setGuardandoEdicion] = useState(false);
   const { esAdmin } = useAuth();
+  const navigate = useNavigate();
+  
+
 
   function cargar() {
     setCargando(true);
@@ -46,7 +49,7 @@ export default function Clientes() {
     setGuardando(true);
     try {
       await crearCliente(nuevo);
-      setNuevo({ nombre: "", correo: "", telefono: "" });
+      setNuevo({ nombre: "", correo: "", telefono: "", empresa: "" });
       setMostrarForm(false);
       cargar();
     } catch (err) {
@@ -64,6 +67,7 @@ export default function Clientes() {
         nombre: editando.nombre,
         correo: editando.correo,
         telefono: editando.telefono,
+        empresa: editando.empresa,
         estado: editando.estado,
       });
       setEditando(null);
@@ -136,6 +140,12 @@ export default function Clientes() {
             value={nuevo.telefono}
             onChange={(e) => setNuevo((p) => ({ ...p, telefono: e.target.value }))}
           />
+          <input
+            type="text"
+            placeholder="Empresa (opcional)"
+            value={nuevo.empresa}
+            onChange={(e) => setNuevo((p) => ({ ...p, empresa: e.target.value }))}
+          />
           <button type="submit" disabled={guardando}>
             {guardando ? "Guardando..." : "Guardar"}
           </button>
@@ -160,14 +170,14 @@ export default function Clientes() {
           </thead>
           <tbody>
             {clientes.map((c) => (
-              <tr key={c.id}>
-                <td><Link to={`/clientes/${c.id}`}>{c.nombre}</Link></td>
+              <tr key={c.id} className="clientes__row" onClick={() => navigate(`/clientes/${c.id}`)}>
+                <td><span className="clientes__row-name">{c.nombre}</span></td>
                 <td>{c.correo}</td>
                 <td>{c.telefono || "—"}</td>
                 <td><span className={`etapa-badge etapa-badge--${c.etapa_crm.toLowerCase()}`}>{c.etapa_crm}</span></td>
                 <td>{c.estado}</td>
-                <td>
-                  <button className="clientes__edit-btn" onClick={() => setEditando({ ...c, telefono: c.telefono || "" })}>
+                <td onClick={(e) => e.stopPropagation()}>
+                  <button className="clientes__edit-btn" onClick={() => setEditando({ ...c, telefono: c.telefono || "", empresa: c.empresa || "" })}>
                     Editar
                   </button>
                   {esAdmin && (
@@ -222,6 +232,15 @@ export default function Clientes() {
                 type="tel"
                 value={editando.telefono || ""}
                 onChange={(e) => setEditando((p) => ({ ...p, telefono: e.target.value }))}
+              />
+            </label>
+
+            <label>
+              Empresa
+              <input
+                type="text"
+                value={editando.empresa || ""}
+                onChange={(e) => setEditando((p) => ({ ...p, empresa: e.target.value }))}
               />
             </label>
 

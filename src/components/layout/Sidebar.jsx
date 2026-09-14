@@ -4,6 +4,7 @@ import "./Sidebar.css";
 const LINKS = [
   { to: "/", label: "Dashboard", end: true },
   { to: "/clientes", label: "Clientes" },
+  { to: "/pedidos", label: "Pedidos" },
   { to: "/reportes", label: "Reportes" },
   { to: "/mi-actividad", label: "Mi actividad" },
 ];
