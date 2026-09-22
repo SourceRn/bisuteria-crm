@@ -1,7 +1,8 @@
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import "./Sidebar.css";
 
-const LINKS = [
+const LINKS_BASE = [
   { to: "/", label: "Dashboard", end: true },
   { to: "/clientes", label: "Clientes" },
   { to: "/pedidos", label: "Pedidos" },
@@ -10,11 +11,14 @@ const LINKS = [
 ];
 
 export default function Sidebar() {
+  const { esAdmin } = useAuth();
+  const links = esAdmin ? [...LINKS_BASE, { to: "/usuarios", label: "Usuarios" }] : LINKS_BASE;
+
   return (
     <aside className="sidebar">
       <div className="sidebar__brand">Yatzari CRM</div>
       <nav className="sidebar__nav">
-        {LINKS.map((link) => (
+        {links.map((link) => (
           <NavLink
             key={link.to}
             to={link.to}

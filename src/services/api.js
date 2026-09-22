@@ -56,6 +56,12 @@ export const getMiActividad = (params = {}) => {
   return request(`/usuarios/me/actividad${query ? `?${query}` : ""}`);
 };
 export const getUsuarios = () => request("/usuarios");
+export const crearUsuarioAdmin = (datos) =>
+  request("/usuarios", { method: "POST", body: JSON.stringify(datos) });
+export const actualizarUsuarioAdmin = (id, datos) =>
+  request(`/usuarios/${id}`, { method: "PUT", body: JSON.stringify(datos) });
+export const eliminarUsuarioAdmin = (id) =>
+  request(`/usuarios/${id}`, { method: "DELETE" });
 
 // Evaluaciones (snapshots historicos)
 export const getEvaluaciones = (params = {}) => {

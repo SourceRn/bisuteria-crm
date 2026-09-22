@@ -1,0 +1,112 @@
+.usuarios__toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.usuarios__new-btn {
+  background: var(--color-text);
+  color: var(--color-bg);
+  border: none;
+  border-radius: var(--radius-full);
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.usuarios__form {
+  display: flex;
+  gap: 10px;
+  background: var(--color-bg-soft);
+  padding: 16px;
+  border-radius: var(--radius-md);
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.usuarios__form input,
+.usuarios__form select {
+  flex: 1;
+  min-width: 140px;
+  background: var(--color-bg);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+}
+
+.usuarios__form button {
+  background: var(--color-lavender);
+  color: var(--color-lavender-dark);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 10px 20px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.usuarios__error {
+  color: var(--color-danger);
+  margin-bottom: 12px;
+}
+
+.usuarios__table {
+  background: var(--color-bg-soft);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.usuarios__table th {
+  text-align: left;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-soft);
+  padding: 14px 16px;
+  border-bottom: 0.5px solid var(--color-bg);
+}
+
+.usuarios__table td {
+  padding: 12px 16px;
+  font-size: 14px;
+  border-bottom: 0.5px solid var(--color-bg);
+}
+
+.usuarios__table tr:last-child td {
+  border-bottom: none;
+}
+
+.rol-badge,
+.estado-badge {
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+}
+
+.rol-badge--admin { background: var(--color-lavender); color: var(--color-lavender-dark); }
+.rol-badge--usuario { background: var(--color-bg); color: var(--color-text-soft); }
+
+.estado-badge--activo { background: var(--color-sage); color: var(--color-sage-dark); }
+.estado-badge--inactivo { background: #E8C4C4; color: #8A4F52; }
+
+.usuarios__actions {
+  display: flex;
+  gap: 10px;
+}
+
+.usuarios__actions button {
+  background: none;
+  border: none;
+  font-size: 13px;
+  color: var(--color-lavender-dark);
+  font-weight: 500;
+}
+
+.usuarios__delete-btn {
+  color: var(--color-danger) !important;
+}
+
+.usuarios__self {
+  font-size: 12px;
+  color: var(--color-text-soft);
+  font-style: italic;
+}
