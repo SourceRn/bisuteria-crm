@@ -45,6 +45,10 @@
   padding: 11px 14px;
   color: var(--color-text);
 }
+.login__card .password-input input {
+  background: var(--color-bg-soft);
+  padding: 11px 40px 11px 14px;
+}
 
 .login__submit {
   margin-top: 8px;

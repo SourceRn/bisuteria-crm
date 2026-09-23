@@ -3,6 +3,7 @@ import Layout from "../components/layout/Layout";
 import { useAuth } from "../context/AuthContext";
 import { getUsuarios, crearUsuarioAdmin, actualizarUsuarioAdmin, eliminarUsuarioAdmin } from "../services/api";
 import "./Usuarios.css";
+import PasswordInput from "../components/ui/PasswordInput";
 
 const ROLES = ["admin", "usuario"];
 
@@ -11,9 +12,9 @@ export default function Usuarios() {
   const [usuarios, setUsuarios] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
-
+  
   const [mostrarForm, setMostrarForm] = useState(false);
-  const [nuevo, setNuevo] = useState({ nombre: "", correo: "", password: "", rol: "usuario" });
+  const [nuevo, setNuevo] = useState({ nombre: "", correo: "", password: "", confirmarPassword: "", rol: "usuario" });
   const [guardando, setGuardando] = useState(false);
 
   function cargar() {
@@ -30,10 +31,21 @@ export default function Usuarios() {
 
   async function handleCrear(e) {
     e.preventDefault();
+
+    if (nuevo.password !== nuevo.confirmarPassword) {
+      setError("Las contraseñas no coinciden");
+      return;
+    }
+
     setGuardando(true);
     try {
-      await crearUsuarioAdmin(nuevo);
-      setNuevo({ nombre: "", correo: "", password: "", rol: "usuario" });
+      await crearUsuarioAdmin({
+        nombre: nuevo.nombre,
+        correo: nuevo.correo,
+        password: nuevo.password,
+        rol: nuevo.rol,
+      });
+      setNuevo({ nombre: "", correo: "", password: "", confirmarPassword: "", rol: "usuario" });
       setMostrarForm(false);
       cargar();
     } catch (err) {
@@ -98,13 +110,19 @@ export default function Usuarios() {
             value={nuevo.correo}
             onChange={(e) => setNuevo((p) => ({ ...p, correo: e.target.value }))}
           />
-          <input
-            type="password"
+          <PasswordInput
             placeholder="Contraseña (min. 6 caracteres)"
             required
             minLength={6}
             value={nuevo.password}
             onChange={(e) => setNuevo((p) => ({ ...p, password: e.target.value }))}
+          />
+          <PasswordInput
+            placeholder="Confirmar contraseña"
+            required
+            minLength={6}
+            value={nuevo.confirmarPassword}
+            onChange={(e) => setNuevo((p) => ({ ...p, confirmarPassword: e.target.value }))}
           />
           <select value={nuevo.rol} onChange={(e) => setNuevo((p) => ({ ...p, rol: e.target.value }))}>
             {ROLES.map((r) => (

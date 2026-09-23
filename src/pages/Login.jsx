@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import "./Login.css";
+import PasswordInput from "../components/ui/PasswordInput";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -47,8 +48,7 @@ export default function Login() {
 
         <label>
           Contraseña
-          <input
-            type="password"
+          <PasswordInput
             name="password"
             required
             value={form.password}
