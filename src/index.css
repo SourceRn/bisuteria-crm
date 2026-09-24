@@ -61,3 +61,13 @@ input, select {
   font-family: var(--font-body);
   font-size: 14px;
 }
+
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-scroll table {
+  min-width: 640px;
+}

@@ -1,0 +1,19 @@
+.layout {
+  display: flex;
+}
+
+.layout__content {
+  flex: 1;
+  min-height: 100vh;
+  min-width: 0; /* clave: permite que el contenido se encoja en vez de forzar overflow de pagina */
+}
+
+.layout__main {
+  padding: 32px;
+}
+
+@media (max-width: 690px) {
+  .layout__main {
+    padding: 20px 16px;
+  }
+}

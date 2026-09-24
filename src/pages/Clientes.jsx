@@ -157,44 +157,46 @@ export default function Clientes() {
       {cargando ? (
         <p>Cargando...</p>
       ) : (
-        <table className="clientes__table">
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Correo</th>
-              <th>Teléfono</th>
-              <th>Etapa</th>
-              <th>Estado</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {clientes.map((c) => (
-              <tr key={c.id} className="clientes__row" onClick={() => navigate(`/clientes/${c.id}`)}>
-                <td><span className="clientes__row-name">{c.nombre}</span></td>
-                <td>{c.correo}</td>
-                <td>{c.telefono || "—"}</td>
-                <td><span className={`etapa-badge etapa-badge--${c.etapa_crm.toLowerCase()}`}>{c.etapa_crm}</span></td>
-                <td>{c.estado}</td>
-                <td onClick={(e) => e.stopPropagation()}>
-                  <button className="clientes__edit-btn" onClick={() => setEditando({ ...c, telefono: c.telefono || "", empresa: c.empresa || "" })}>
-                    Editar
-                  </button>
-                  {esAdmin && (
-                    <button className="clientes__delete-btn" onClick={() => handleEliminar(c)}>
-                      Eliminar
-                    </button>
-                  )}
-                </td>
-              </tr>
-            ))}
-            {clientes.length === 0 && (
+        <div className="table-scroll">
+          <table className="clientes__table">
+            <thead>
               <tr>
-                <td colSpan={6} className="clientes__empty">No hay clientes con esos filtros.</td>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Teléfono</th>
+                <th>Etapa</th>
+                <th>Estado</th>
+                <th></th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {clientes.map((c) => (
+                <tr key={c.id} className="clientes__row" onClick={() => navigate(`/clientes/${c.id}`)}>
+                  <td><span className="clientes__row-name">{c.nombre}</span></td>
+                  <td>{c.correo}</td>
+                  <td>{c.telefono || "—"}</td>
+                  <td><span className={`etapa-badge etapa-badge--${c.etapa_crm.toLowerCase()}`}>{c.etapa_crm}</span></td>
+                  <td>{c.estado}</td>
+                  <td onClick={(e) => e.stopPropagation()}>
+                    <button className="clientes__edit-btn" onClick={() => setEditando({ ...c, telefono: c.telefono || "", empresa: c.empresa || "" })}>
+                      Editar
+                    </button>
+                    {esAdmin && (
+                      <button className="clientes__delete-btn" onClick={() => handleEliminar(c)}>
+                        Eliminar
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+              {clientes.length === 0 && (
+                <tr>
+                  <td colSpan={6} className="clientes__empty">No hay clientes con esos filtros.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       )}
 
       {editando && (

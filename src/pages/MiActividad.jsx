@@ -49,26 +49,28 @@ export default function MiActividad() {
       ) : actividad.length === 0 ? (
         <p className="actividad__empty">No has registrado interacciones en este periodo.</p>
       ) : (
-        <table className="actividad__table">
-          <thead>
-            <tr>
-              <th>Fecha</th>
-              <th>Cliente</th>
-              <th>Tipo</th>
-              <th>Descripción</th>
-            </tr>
-          </thead>
-          <tbody>
-            {actividad.map((a) => (
-              <tr key={a.id} className="actividad__row" onClick={() => navigate(`/clientes/${a.cliente_id}`)}>
-                <td>{new Date(a.fecha).toLocaleString()}</td>
-                <td><span className="actividad__row-name">{a.cliente_nombre}</span></td>
-                <td>{a.tipo}</td>
-                <td>{a.descripcion || "—"}</td>
+        <div className="table-scroll">
+          <table className="actividad__table">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Cliente</th>
+                <th>Tipo</th>
+                <th>Descripción</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {actividad.map((a) => (
+                <tr key={a.id} className="actividad__row" onClick={() => navigate(`/clientes/${a.cliente_id}`)}>
+                  <td>{new Date(a.fecha).toLocaleString()}</td>
+                  <td><span className="actividad__row-name">{a.cliente_nombre}</span></td>
+                  <td>{a.tipo}</td>
+                  <td>{a.descripcion || "—"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </Layout>
   );

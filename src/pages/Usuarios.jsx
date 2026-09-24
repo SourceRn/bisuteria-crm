@@ -140,47 +140,49 @@ export default function Usuarios() {
       {cargando ? (
         <p>Cargando...</p>
       ) : (
-        <table className="usuarios__table">
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Correo</th>
-              <th>Rol</th>
-              <th>Estado</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {usuarios.map((u) => (
-              <tr key={u.id}>
-                <td>{u.nombre}</td>
-                <td>{u.correo}</td>
-                <td>
-                  <span className={`rol-badge rol-badge--${u.rol}`}>{u.rol}</span>
-                </td>
-                <td>
-                  <span className={`estado-badge estado-badge--${u.activo ? "activo" : "inactivo"}`}>
-                    {u.activo ? "Activo" : "Inactivo"}
-                  </span>
-                </td>
-                <td className="usuarios__actions">
-                  {u.id === perfil?.id ? (
-                    <span className="usuarios__self">Tú</span>
-                  ) : (
-                    <>
-                      <button onClick={() => handleToggleActivo(u)}>
-                        {u.activo ? "Desactivar" : "Activar"}
-                      </button>
-                      <button className="usuarios__delete-btn" onClick={() => handleEliminar(u)}>
-                        Eliminar
-                      </button>
-                    </>
-                  )}
-                </td>
+        <div className="table-scroll">
+          <table className="usuarios__table">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Rol</th>
+                <th>Estado</th>
+                <th></th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {usuarios.map((u) => (
+                <tr key={u.id}>
+                  <td>{u.nombre}</td>
+                  <td>{u.correo}</td>
+                  <td>
+                    <span className={`rol-badge rol-badge--${u.rol}`}>{u.rol}</span>
+                  </td>
+                  <td>
+                    <span className={`estado-badge estado-badge--${u.activo ? "activo" : "inactivo"}`}>
+                      {u.activo ? "Activo" : "Inactivo"}
+                    </span>
+                  </td>
+                  <td className="usuarios__actions">
+                    {u.id === perfil?.id ? (
+                      <span className="usuarios__self">Tú</span>
+                    ) : (
+                      <>
+                        <button onClick={() => handleToggleActivo(u)}>
+                          {u.activo ? "Desactivar" : "Activar"}
+                        </button>
+                        <button className="usuarios__delete-btn" onClick={() => handleEliminar(u)}>
+                          Eliminar
+                        </button>
+                      </>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </Layout>
   );

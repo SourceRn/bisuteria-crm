@@ -16,6 +16,12 @@
   align-items: start;
 }
 
+@media (max-width: 780px) {
+  .detalle__layout {
+    grid-template-columns: 1fr;
+  }
+}
+
 .detalle__main {
   display: flex;
   flex-direction: column;
@@ -64,6 +70,7 @@
 
 .detalle__form-row {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
 }
 
@@ -75,6 +82,7 @@
   border-radius: var(--radius-sm);
   padding: 8px 10px;
   font-size: 13px;
+  min-width: 130px;
 }
 
 .detalle__form input[type="text"] {

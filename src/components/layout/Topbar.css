@@ -94,3 +94,30 @@
 .topbar__menu-item:hover {
   background: var(--color-bg-soft);
 }
+
+.topbar__left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.topbar__menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--color-text);
+}
+
+@media (max-width: 690px) {
+  .topbar__menu-btn {
+    display: flex;
+  }
+
+  .topbar {
+    padding: 16px 20px;
+  }
+
+  .topbar__email {
+    display: none; /* en pantallas chicas, solo el avatar, para dar mas espacio */
+  }
+}

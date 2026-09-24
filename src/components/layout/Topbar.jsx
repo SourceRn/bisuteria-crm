@@ -1,10 +1,10 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { IconChevronDown, IconLogout } from "@tabler/icons-react";
 import { useAuth } from "../../context/AuthContext";
 import "./Topbar.css";
+import { IconChevronDown, IconLogout, IconMenu2 } from "@tabler/icons-react";
 
-export default function Topbar({ titulo }) {
+export default function Topbar({ titulo, onMenuClick }) {
   const { usuario, perfil, logout } = useAuth();
   const navigate = useNavigate();
   const [abierto, setAbierto] = useState(false);
@@ -30,7 +30,12 @@ export default function Topbar({ titulo }) {
 
   return (
     <header className="topbar">
-      <h1 className="topbar__title">{titulo}</h1>
+      <div className="topbar__left">
+        <button className="topbar__menu-btn" onClick={onMenuClick} aria-label="Abrir menú">
+          <IconMenu2 size={20} stroke={1.6} />
+        </button>
+        <h1 className="topbar__title">{titulo}</h1>
+      </div>
 
       <div className="topbar__user" ref={menuRef}>
         <button className="topbar__trigger" onClick={() => setAbierto((v) => !v)}>

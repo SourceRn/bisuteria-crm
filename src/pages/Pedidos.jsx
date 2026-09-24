@@ -70,26 +70,28 @@ export default function Pedidos() {
       ) : pedidos.length === 0 ? (
         <p className="pedidos__empty">No hay pedidos registrados en este periodo.</p>
       ) : (
-        <table className="pedidos__table">
-          <thead>
-            <tr>
-              <th>Fecha</th>
-              <th>Cliente</th>
-              <th>Correo</th>
-              <th>Detalle</th>
-            </tr>
-          </thead>
-          <tbody>
-            {pedidos.map((p) => (
-              <tr key={p.id} className="pedidos__row" onClick={() => navigate(`/clientes/${p.cliente_id}`)}>
-                <td>{new Date(p.fecha).toLocaleDateString()}</td>
-                <td><span className="pedidos__row-name">{p.cliente_nombre}</span></td>
-                <td>{p.cliente_correo}</td>
-                <td>{p.descripcion || "—"}</td>
+        <div className="table-scroll">
+          <table className="pedidos__table">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Cliente</th>
+                <th>Correo</th>
+                <th>Detalle</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {pedidos.map((p) => (
+                <tr key={p.id} className="pedidos__row" onClick={() => navigate(`/clientes/${p.cliente_id}`)}>
+                  <td>{new Date(p.fecha).toLocaleDateString()}</td>
+                  <td><span className="pedidos__row-name">{p.cliente_nombre}</span></td>
+                  <td>{p.cliente_correo}</td>
+                  <td>{p.descripcion || "—"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </Layout>
   );
